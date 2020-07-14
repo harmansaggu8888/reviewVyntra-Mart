@@ -1,5 +1,5 @@
 # reviewVyntra-Mart
-All funcionality working fine:
+All funcionalities working fine:
 - User & admin login & management module
 - Product listing 
 - Secure login using AUTH2

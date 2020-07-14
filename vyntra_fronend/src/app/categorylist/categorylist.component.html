@@ -1,0 +1,26 @@
+ <div class="panel panel-default">
+  <div class="panel-heading">
+      <h1>categories</h1>
+  </div>
+  <div class="panel-body">
+      <table datatable [dtOptions]="dtOptions"
+      [dtTrigger]="dtTrigger"   class="row-border hover" >
+          <thead>
+              <tr>
+                  <th>category Name</th>
+                  
+                  
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let category of categories ">
+                  <td>{{category.categoryName}}</td>
+                  <td>{{category.categoryEmail}}</td>
+                  <td><button (click)="deleteCategory(category.id)" class='btn btn-primary'>Delete</button></td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</div> 
+
+

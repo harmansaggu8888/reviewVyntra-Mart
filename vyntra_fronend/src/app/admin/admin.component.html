@@ -1,0 +1,125 @@
+<div class="waraper">
+    <br>
+    <br>
+    <br>
+    <div class="container ">
+        <div class="row">
+            <div *ngIf="isAdminLoggedIn(); else elseBlock">
+                <h3>Add Product</h3>
+                <div class="row">
+                    <div class="col-12">
+                            <button class="mybtn btn btn-secondary" (click)="show()" *ngIf="!showAdd">Click to Add</button>
+                            <button class="mybtn btn btn-secondary" (click)="hide()" *ngIf="showAdd">Click to hide</button>
+                            <div *ngIf="isProductAdded">
+                                <br>
+                                <br>
+                                <h4>The Product has been saved successfully</h4>
+                            </div>
+                    </div>
+                </div>
+                <form class="form-horizontal shadow p-3 mb-5 bg-white rounded " #f="ngForm" (ngSubmit)="f.form.valid && addProd(desc,quan,price,prodname,image)"
+                        *ngIf="showAdd">
+                        <div class="row">
+                                <div class="col-6">
+                                        <div class="form-group">
+                                                <input type="text" class="form-control" placeholder="Product Name" #prodname
+                                                        ngModel name="prodname">
+                                        </div>
+                                        <div class="form-group">
+                                                <textarea type="text" class="form-control" placeholder="description" name="desc"
+                                                        #desc ngModel rows="5"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                                <input type="text" class="form-control" placeholder="quantity" name="quan" #quan
+                                                        ngModel>
+                                        </div>
+                                        <div class="form-group">
+                                                <input type="text" class="form-control" placeholder="price" name="price" #price
+                                                        ngModel>
+                                        </div>
+                                        <div class="form-group">
+                                                <input type="file" class="form-control" placeholder="Product Picture" #image
+                                                        accept="image/*" name="image"
+                                                        (change)="handleFileInput($event.target.files)">
+                                        </div>
+                                </div>
+                                <div class="col-6">
+                                        <h4 class="text-center">Image preview</h4>
+                                        <img [src]="imageUrl" style="width:400px;height: 300px;">
+        
+                                </div>
+                                
+                        </div>
+                        <div class="row">
+                                <div class="col-6">
+                                        <input type="submit" class=" btn btn-primary" value="Add Product">
+                                </div>
+                        </div>
+                </form>
+                <hr>
+                <div class="row">
+
+                    <div class="grid">
+                        <div class="col-md-3 col-sm-6 col-xs-12 grid-item cat2" *ngFor="let product of products">
+                            <div class="shop mb-30">
+                                <div class="shop-img">
+                                    <a href="preduct-details.html">
+                                        <img src="data:image/png;base64,{{product.productimage}}"  height="150px" width="200px" alt="" />
+                                    </a>
+                                </div>
+                                <div class="card-title">
+                                    <h4><a href="preduct-details.html">{{product.productname}}</a></h4>
+                                    <span>Rs. {{product.price}}</span>
+                                </div>
+                                <input type="hidden" value={{product.productid}} #prdid>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <button class="btn btn-secondary" (click)="edit(prdid)"> Edit </button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-danger"(click)="delProd(prdid)">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ng-template #elseBlock>
+                <h3>Administrator Login </h3>
+                <br>
+                <br>
+                <div class="modal-body">
+                    <div class="login">
+                        <div class="login-form-container">
+                            <div class="login-text">
+                                <h2>login</h2>
+                                <span>Please login using Administrator's details below.</span>
+                            </div>
+                            <div class="login-form">
+                                <form [formGroup]="adminForm" (ngSubmit)="login()">
+                                    <div *ngIf="error">Content to render when condition is true.</div>
+                                    <div class="form-group">
+                                        <input class="form-control" type="email" formControlName="email" placeholder="Username">
+                                    </div>
+                                    <div class="form-group">
+                                        
+                                        <input class="form-control" type="password" formControlName="password" placeholder="Password">
+                                    </div>
+                                    <div class="button-box">
+                                        <button type="submit" class="default-btn floatright">Login</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br> 
+    <div>
+</div>

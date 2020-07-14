@@ -1,0 +1,81 @@
+<div class="waraper">
+            
+            
+            
+            
+            <!-- slider start -->
+            <div class="slider-area style-1">
+                <div class="container-fluid text-center">
+                    <div class="slider-text">
+                        <h2>Vyntra's Summer Collection 2020 </h2>
+                        <h3>A good looking, comfortable traditional collection</h3>
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- slider end -->
+            <!-- shop area start -->
+            <div class="shop-area ptb-90">
+                <div class="container-fluid">       
+                    <div class="shop-style-all">
+                        <div class="row">
+                            <div class="grid">
+                                <div class="col-md-3 col-sm-6 col-xs-12 grid-item cat2" *ngFor="let product of products">
+                                    <div class="shop hover-style mb-30">
+                                        <div class="shop-img">
+                                            <a href="#">
+                                                <img src="data:image/png;base64,{{product.productimage}}"  height="150px" width="200px" alt="" />
+                                            </a>
+                                        </div>
+                                        <div class="card-title">
+                                            <h4><a href="#">{{product.productname}}</a></h4>
+                                            <span>Rs. {{product.price}}</span>
+                                        </div>
+                                        <input type="hidden" value={{product.productid}} #prdid>
+                                        <div class="product-cart">
+                                            <button class="pe-7s-cart" (click)="addToCart(prdid)"></button>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="view-more text-center mt-30">
+                        <a href="shop.html">view more</a>
+                    </div>
+                </div>
+            </div>          
+            <!-- shop area end -->
+            <!-- banner area start -->
+            <div class="banner-area pb-100">
+                <div class="container-fluid">
+                    <div class="banner-img">
+                        <img src="assets/img/banner/1.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <!-- banner area end -->
+            <!-- blog area start -->
+            <div class="blog-area pb-70">
+                <div class="container-fluid">
+                   
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+            
+
+        

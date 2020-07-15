@@ -1,0 +1,45 @@
+
+
+    <br>
+    <br>
+    <br>
+<div class="container">
+    <article class="card">
+        <header class="card-header"> My Orders / Tracking </header>
+        <article class="card">
+            <article class="card-body">
+                <div *ngFor="let order of orderlist">
+                    <div class="col-6">
+                        <p class="card-title"><b>Order By:</b> {{order.orderBy}}</p>
+                    </div>
+                    
+                    <div class="col" *ngFor="let buf of order.products">
+                        <p class="card-title">Product Name: {{buf.productname}}</p>
+                        <p class="card-text"> Price : {{buf.price  | currency:'INR'}}</p>
+                        <p class="card-text">Quantity: {{buf.quantity}}</p>
+                        <p class="card-text">Order Date: {{buf.dateAdded}}</p>
+                    </div>
+                </div>
+            </article>
+            <article class="card">
+                <div class="card-body">
+                    <div class="col"> <strong>Estimated Delivery time:</strong> <br>29 nov 2019 </div>
+                    <div class="col"> <strong>Shipping BY:</strong> <br> BLUEDART, | <i class="fa fa-phone"></i> +1598675986 </div>
+                    <div class="col"> <strong>Status:</strong> <br> Order Confirmed </div>
+                    <div class="col"> <strong>Tracking #:</strong> <br> BD045903594059 </div>
+                </div>
+            </article>
+            <div class="track">
+                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Order confirmed</span> </div>
+                <div class="step"> <span class="icon"> <i class="fa fa-user"></i> </span> <span class="text"> Picked by courier</span> </div>
+                <div class="step"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> On the way </span> </div>
+                <div class="step"> <span class="icon"> <i class="fa fa-box"></i> </span> <span class="text">Ready for pickup</span> </div>
+            </div>
+            <hr>
+            <hr>
+        </article>
+    </article>
+</div>
+  <br>
+  <br>
+  <br>

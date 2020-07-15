@@ -51,13 +51,12 @@ export class CartComponent implements OnInit {
     this.api.place(this.auth).subscribe(res => {
       console.log(res);
     });
-    console.log("sgfsdgsdgdsfgdsgsdgsdf");
-    this.route.navigate(['/payment']);
+    this.route.navigate(['/address']);
   }
 
 
   getProductByID(prodid) {
-    if (this.api.isAuthenticated) {
+    if (this.api.isAuthenticated()) {
       console.log("Got the product");
       this.auth = this.api.getToken();
       this.api.getProductbyID(this.auth,prodid).subscribe(

@@ -35,7 +35,7 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
     this.createForm();
     this.isProductAdded = false;
-    if (this.api.isAuthenticated) {
+    if (this.api.isAuthenticated()) {
       this.auth = this.api.getToken();
       this.api.getProducts(this.auth).subscribe(
         res => {

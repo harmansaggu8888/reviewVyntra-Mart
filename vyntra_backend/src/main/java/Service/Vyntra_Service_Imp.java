@@ -23,8 +23,16 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+
+import response.order;
+import response.viewOrdResp;
+
+import response.response;
+import response.userResp;
+
 import Model.UserOrder;
 import Model.Cart;
+import Model.UserAddress;
 
 import response.cartResp;
 import response.prodResp;
@@ -37,12 +45,13 @@ import DAO.Vyntra_DAO;
 import DAO.Product_DAO;
 import DAO.Cart_DAO;
 import DAO.Order_DAO;
-import Model.Cart;
+import DAO.Address_DAO;
 import Model.Product;
 import Model.User;
 import common.ResponseCode;
 import common.Validator;
 import response.serverResp;
+import response.viewOrdResp;
 
 @Service
 @Transactional
@@ -65,7 +74,11 @@ public class Vyntra_Service_Imp implements Vyntra_Service {
 	
 	@Autowired
 	private Order_DAO ordRepo;
-
+	
+	
+	@Autowired
+	private Address_DAO addrRepo;
+	
 	@Override
 	public Product getProductByID(int productid) {
 		return proRepo.findByProductid(productid);
@@ -214,6 +227,25 @@ public class Vyntra_Service_Imp implements Vyntra_Service {
 		}
 		return new ResponseEntity<prodResp>(resp, HttpStatus.ACCEPTED);
 	}
+	
+	@Override
+	public ResponseEntity<prodResp> get_Products()
+	{
+		prodResp resp = new prodResp();
+		{
+			try {
+				resp.setStatus(ResponseCode.SUCCESS_CODE);
+				resp.setMessage(ResponseCode.LIST_SUCCESS_MESSAGE);
+				
+				resp.setOblist(proRepo.getProducts());
+			} catch (Exception e) {
+				resp.setStatus(ResponseCode.FAILURE_CODE);
+				resp.setMessage(e.getMessage());
+			}
+		} 
+		return new ResponseEntity<prodResp>(resp, HttpStatus.ACCEPTED);
+	}
+	
 	
 	@Override
 	public ResponseEntity<prodResp> getProductbyID( String AUTH_TOKEN, String productid){
@@ -419,5 +451,104 @@ public class Vyntra_Service_Imp implements Vyntra_Service {
 		}
 		return new ResponseEntity<serverResp>(resp, HttpStatus.ACCEPTED);
 	}
+	
+	
+	@Override
+	public ResponseEntity<userResp> addAddress(UserAddress address, String AUTH_TOKEN) {
+		userResp resp = new userResp();
+		if (Validator.isAddressEmpty(address)) {
+			resp.setStatus(ResponseCode.BAD_REQUEST_CODE);
+			resp.setMessage(ResponseCode.BAD_REQUEST_MESSAGE);
+		} else if (!Validator.isStringEmpty(AUTH_TOKEN) && jwtRepo.checkToken(AUTH_TOKEN) != null) {
+			try {
+				User user = jwtRepo.checkToken(AUTH_TOKEN);
+				user.setAddress(address);
+				address.setUser(user);
+				addrRepo.addAddress(address);
+				resp.setStatus(ResponseCode.SUCCESS_CODE);
+				resp.setMessage(ResponseCode.CUST_ADR_ADD);
+				resp.setUser(user);
+				resp.setAddress(address);
+				resp.setAUTH_TOKEN(AUTH_TOKEN);
+			} catch (Exception e) {
+				resp.setStatus(ResponseCode.FAILURE_CODE);
+				resp.setMessage(e.getMessage());
+				resp.setAUTH_TOKEN(AUTH_TOKEN);
+			}
+		} else {
+			resp.setStatus(ResponseCode.FAILURE_CODE);
+			resp.setMessage(ResponseCode.FAILURE_MESSAGE);
+		}
+		return new ResponseEntity<userResp>(resp, HttpStatus.ACCEPTED);
+	}
+
+	@Override
+	public ResponseEntity<response> getAddress(String AUTH_TOKEN) {
+
+		response resp = new response();
+		if (jwtRepo.checkToken(AUTH_TOKEN) != null) {
+			try {
+				User user = jwtRepo.checkToken(AUTH_TOKEN);
+				UserAddress adr = addrRepo.findByUser(user);
+
+				HashMap<String, String> map = new HashMap<>();
+				map.put(WebConstants.ADR_NAME, adr.getAddress());
+				map.put(WebConstants.ADR_CITY, adr.getCity());
+				map.put(WebConstants.ADR_STATE, adr.getState());
+				map.put(WebConstants.ADR_COUNTRY, adr.getCountry());
+				map.put(WebConstants.ADR_ZP, String.valueOf(adr.getZipcode()));
+				map.put(WebConstants.PHONE, adr.getPhonenumber());
+
+				resp.setStatus(ResponseCode.SUCCESS_CODE);
+				resp.setMessage(ResponseCode.CUST_ADR_ADD);
+				resp.setMap(map);
+				// resp.setAddress(adr);
+				resp.setAUTH_TOKEN(AUTH_TOKEN);
+			} catch (Exception e) {
+				resp.setStatus(ResponseCode.FAILURE_CODE);
+				resp.setMessage(e.getMessage());
+				resp.setAUTH_TOKEN(AUTH_TOKEN);
+			}
+		} else {
+			resp.setStatus(ResponseCode.FAILURE_CODE);
+			resp.setMessage(ResponseCode.FAILURE_MESSAGE);
+		}
+		return new ResponseEntity<response>(resp, HttpStatus.ACCEPTED);
+	}
+	
+	
+
+	@Override
+	public ResponseEntity<viewOrdResp> viewOrders(String AUTH_TOKEN){
+
+		viewOrdResp resp = new viewOrdResp();
+		if (!Validator.isStringEmpty(AUTH_TOKEN) && jwtRepo.checkToken(AUTH_TOKEN) != null) {
+			try {
+				resp.setStatus(ResponseCode.SUCCESS_CODE);
+				resp.setMessage(ResponseCode.VIEW_SUCCESS_MESSAGE);
+				resp.setAUTH_TOKEN(AUTH_TOKEN);
+				List<order> orderList = new ArrayList<>();
+				List<UserOrder> poList = ordRepo.getOrders();
+				poList.forEach((po) -> {
+					order ord = new order();
+					ord.setOrderBy(po.getEmail());
+					ord.setOrderId(po.getOrderId());
+					ord.setOrderStatus(po.getOrderStatus());
+					ord.setProducts(cartRepo.findAllByOrderId(po.getOrderId()));
+					orderList.add(ord);
+				});
+				resp.setOrderlist(orderList);
+			} catch (Exception e) {
+				resp.setStatus(ResponseCode.FAILURE_CODE);
+				resp.setMessage(e.getMessage());
+				resp.setAUTH_TOKEN(AUTH_TOKEN);
+			}
+		} else {
+			resp.setStatus(ResponseCode.FAILURE_CODE);
+			resp.setMessage(ResponseCode.FAILURE_MESSAGE);
+		}
+		return new ResponseEntity<viewOrdResp>(resp, HttpStatus.ACCEPTED);
+	}
+
 	
 }

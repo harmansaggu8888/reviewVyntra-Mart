@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import Model.Cart;
+import Model.Product;
 import Model.UserOrder;
 
 @Repository
@@ -36,6 +37,14 @@ public class Order_DAO_Imp implements Order_DAO{
 		}
 		return status;
 	}
-	//List<UserOrder> findAll();
+	
+	
+	@Override
+	public List<UserOrder> getOrders() {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<UserOrder> query = currentSession.createQuery("from UserOrder", UserOrder.class);
+		List<UserOrder> list = query.getResultList();
+		return list;
+	}
 
 }

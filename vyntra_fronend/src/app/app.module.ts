@@ -11,6 +11,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AdminComponent } from './admin/admin.component';
 import { CartComponent } from './cart/cart.component';
 import { PaymentComponent } from './payment/payment.component';
+import { AddressComponent } from './address/address.component';
+import { TrackOrderComponent } from './track-order/track-order.component';
 
 
 
@@ -27,7 +29,9 @@ import { PaymentComponent } from './payment/payment.component';
     RegisterComponent,
     AdminComponent,
     CartComponent,
-    PaymentComponent
+    PaymentComponent,
+    AddressComponent,
+    TrackOrderComponent
   ],
   imports: [
     BrowserModule,

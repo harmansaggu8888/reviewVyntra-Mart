@@ -1,7 +1,9 @@
 package Controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,15 +24,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+
+import response.viewOrdResp;
+import response.response;
+import response.userResp;
 import response.cartResp;
-
-
-
-import Model.User;
+import Model.UserAddress;
 import response.serverResp;
 import response.prodResp;
 
-
+import Model.User;
 import Model.Product;
 import Service.Vyntra_Service;
 import common.WebConstants;
@@ -81,6 +84,12 @@ public class Controller {
 		return vyntraservice.getProducts(AUTH_TOKEN);
 	}
 	
+	@PostMapping("/get-Products")
+	public ResponseEntity<prodResp> get_Products()
+	{
+		return vyntraservice.get_Products();
+	}
+	
 	@GetMapping("/getProduct/{prodid}")
 	public ResponseEntity<prodResp> getProductbyID(@RequestHeader(name = WebConstants.USER_AUTH_TOKEN) String AUTH_TOKEN,
 			@PathVariable("prodid") String productid){
@@ -117,7 +126,7 @@ public class Controller {
 	}
 	
 	
-
+	
 	@GetMapping("/delCart")
 	public ResponseEntity<cartResp> delCart(@RequestHeader(name = WebConstants.USER_AUTH_TOKEN) String AUTH_TOKEN,
 			@RequestParam(name = WebConstants.BUF_ID) String bufcartid) throws IOException {
@@ -128,8 +137,33 @@ public class Controller {
 	@GetMapping("/placeOrder")
 	public ResponseEntity<serverResp> placeOrder(@RequestHeader(name = WebConstants.USER_AUTH_TOKEN) String AUTH_TOKEN)
 			throws IOException {
-
 		return vyntraservice.placeOrder( AUTH_TOKEN);
+	}
+	
+	
+	
+
+	@GetMapping("/getOrders")
+	public ResponseEntity<viewOrdResp> viewOrders(@RequestHeader(name = WebConstants.USER_AUTH_TOKEN) String AUTH_TOKEN)
+			throws IOException {
+
+		return vyntraservice.viewOrders( AUTH_TOKEN);
+	}
+
+	
+	
+	
+	@PostMapping("/addAddress")
+	public ResponseEntity<userResp> addAddress(@Valid @RequestBody UserAddress address,
+			@RequestHeader(name = WebConstants.USER_AUTH_TOKEN) String AUTH_TOKEN) {
+		return vyntraservice.addAddress( address,  AUTH_TOKEN);
+		
+	}
+
+	@PostMapping("/getAddress")
+	public ResponseEntity<response> getAddress(@RequestHeader(name = WebConstants.USER_AUTH_TOKEN) String AUTH_TOKEN) {
+
+		return vyntraservice.getAddress( AUTH_TOKEN);
 	}
 	
 	

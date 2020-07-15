@@ -2,15 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { Address } from 'src/app/Model/address';
 import { ApiService } from 'src/app/Service/api.service';
 import { Router } from '@angular/router';
+import { Order } from '../Model/Order';
+
 
 @Component({
-  selector: 'app-payment',
-  templateUrl: './payment.component.html',
-  styleUrls: ['./payment.component.css']
+  selector: 'app-track-order',
+  templateUrl: './track-order.component.html',
+  styleUrls: ['./track-order.component.css']
 })
-export class PaymentComponent implements OnInit {
-  
-  
+export class TrackOrderComponent implements OnInit {
+
+  orderlist: any[] = [];
+
   model: Address = {
     address: '',
     city: '',
@@ -25,7 +28,9 @@ export class PaymentComponent implements OnInit {
   constructor(private api: ApiService, private route: Router) { }
 
   ngOnInit() {
+    console.log("saggu&&&&&&");
     this.auth = this.api.getToken();
+    this.getOrderList();
     this.api.getAddress(this.auth).subscribe(res => {
       if (res.map != null) {
         this.model = res.map;
@@ -36,9 +41,10 @@ export class PaymentComponent implements OnInit {
   }
 
 
-  track_order() {
-    this.route.navigate(['/track_order']);
+  getOrderList() {
+    this.api.getOrders(this.auth).subscribe(res => {
+      this.orderlist = res.orderlist;
+    });
   }
 
-  
 }

@@ -14,6 +14,7 @@ export class ApiService {
   private LOGU_API = "http://localhost:8080/api/verify_user";
   private LOGA_API = "http://localhost:8080/api/verify_admin";
   private PRDLST_API = "http://localhost:8080/api/getProducts";
+  private PRDLST_API_WO_AUTH = "http://localhost:8080/api/get-Products";
   private PRD_API = "http://localhost:8080/api/getProduct";
   private ADD_PRD_API = "http://localhost:8080/api/addProduct";
   private ADD_CART_API = "http://localhost:8080/api/addToCart";
@@ -21,11 +22,11 @@ export class ApiService {
   private UP_CART_API = "http://localhost:8080/api/updateCart";
   private DEL_CART_API = "http://localhost:8080/api/delCart";
   private PLC_ORD_API = "http://localhost:8080/api/placeOrder";
-  //private ADR_API = "http://localhost:8087/user/addAddress";
-  //private GT_ADR_API = "http://localhost:8087/user/getAddress";
+  private ADR_API = "http://localhost:8080/api/addAddress";
+  private GT_ADR_API = "http://localhost:8080/api/getAddress";
   private DEL_PRD_API = "http://localhost:8080/api/delProduct";
   //private UPD_PRD_API = "http://localhost:8087/admin/updateProducts";
-  //private ORD_API = "http://localhost:8087/admin/viewOrders";
+  private ORD_API = "http://localhost:8080/api/getOrders";
   //private UPD_ORD_API = "http://localhost:8087/admin/updateOrder";
 
   constructor(@Inject(SESSION_STORAGE) private storage: StorageService, private http: HttpClient ) { }
@@ -65,6 +66,12 @@ export class ApiService {
 
     const myheader = new HttpHeaders().set('AUTH_TOKEN', auth);
     return this.http.post<any>(this.PRDLST_API, null, { headers: myheader });
+
+  }
+
+  getProductsWithoutAuth(): Observable<any> {
+
+    return this.http.post<any>(this.PRDLST_API_WO_AUTH, null, { });
 
   }
 
@@ -111,6 +118,19 @@ export class ApiService {
 
 
 
+  
+  // update Address of logged User
+  upAddress(auth: string, adr: Address): Observable<any> {
+    const myheader = new HttpHeaders().set('AUTH_TOKEN', auth);
+    return this.http.post<any>(this.ADR_API, JSON.stringify(adr), { headers: myheader });
+  }
+
+  // fetch address of logged user
+  getAddress(auth: string): Observable<any> {
+    const myheader = new HttpHeaders().set('AUTH_TOKEN', auth);
+    return this.http.post<any>(this.GT_ADR_API, null, { headers: myheader });
+  }
+
 
   // Add product for Logged AdminUser
 
@@ -138,11 +158,18 @@ export class ApiService {
 
 
 
+    // delete Product for Logged Admin User
+    getOrders(auth: string) {
+      const myheader = new HttpHeaders().set('AUTH_TOKEN', auth);
+      return this.http.get<any>(this.ORD_API, { headers: myheader })
+    }
+
   
   // Authentication Methods 
 
   public isAuthenticated(): boolean {
-    return this.getToken() !== null;
+    console.log(this.getToken());
+    return this.getToken() != null;
   }
 
   storeToken(token: string, auth_type: string) {

@@ -8,11 +8,7 @@
         <header class="card-header"> My Orders / Tracking </header>
         <article class="card">
             <article class="card-body">
-                <div *ngFor="let order of orderlist">
-                    <div class="col-6">
-                        <p class="card-title"><b>Order By:</b> {{order.orderBy}}</p>
-                    </div>
-                    
+                <div *ngFor="let order of orderlist">                    
                     <div class="col" *ngFor="let buf of order.products">
                         <p class="card-title">Product Name: {{buf.productname}}</p>
                         <p class="card-text"> Price : {{buf.price  | currency:'INR'}}</p>
@@ -23,8 +19,8 @@
             </article>
             <article class="card">
                 <div class="card-body">
-                    <div class="col"> <strong>Estimated Delivery time:</strong> <br>29 nov 2019 </div>
-                    <div class="col"> <strong>Shipping BY:</strong> <br> BLUEDART, | <i class="fa fa-phone"></i> +1598675986 </div>
+                    <div class="col"> <strong>Estimated Delivery time:</strong> <br>{{date}}</div>
+                    <div class="col"> <strong>Shipping BY:</strong> <br> BLUEDART, | <i class="fa fa-phone"></i> 0120-2232660 </div>
                     <div class="col"> <strong>Status:</strong> <br> Order Confirmed </div>
                     <div class="col"> <strong>Tracking #:</strong> <br> BD045903594059 </div>
                 </div>

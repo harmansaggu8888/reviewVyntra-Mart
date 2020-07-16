@@ -10,17 +10,22 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
     public registerForm: any;
-
     private userRegistered: boolean;
+
+
     constructor(private apiService: ApiService,
       private router: Router,
-      private formBuilder: FormBuilder) {
+      private formBuilder: FormBuilder) 
+    {
       this.createForm();
       this.userRegistered = false;
     }
 
     ngOnInit() {
     }
+
+
+
     createForm() {
       this.registerForm = this.formBuilder.group({
         email: '',
@@ -30,10 +35,10 @@ export class RegisterComponent implements OnInit {
         usertype: 'customer'
       });
     }
-    register(): void {
 
-      this.apiService.register(this.registerForm.value).
-        subscribe(res => {
+
+    register(): void {
+      this.apiService.register(this.registerForm.value).subscribe(res => {
           if (res.status == "400") {
             console.log("Details cannot be empty");
           } else {
@@ -45,6 +50,8 @@ export class RegisterComponent implements OnInit {
             alert("An error has occured, Please try again !!!");
           });
     }
+
+
     isRegistered(){
       if(this.userRegistered){
         this.userRegistered = false;

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Order } from '../Model/Order';
 
 
+
 @Component({
   selector: 'app-track-order',
   templateUrl: './track-order.component.html',
@@ -13,6 +14,7 @@ import { Order } from '../Model/Order';
 export class TrackOrderComponent implements OnInit {
 
   orderlist: any[] = [];
+  date: Date;
 
   model: Address = {
     address: '',
@@ -28,7 +30,8 @@ export class TrackOrderComponent implements OnInit {
   constructor(private api: ApiService, private route: Router) { }
 
   ngOnInit() {
-    console.log("saggu&&&&&&");
+    this.date = new Date();
+    this.date.setDate( this.date.getDate() + 4 );
     this.auth = this.api.getToken();
     this.getOrderList();
     this.api.getAddress(this.auth).subscribe(res => {

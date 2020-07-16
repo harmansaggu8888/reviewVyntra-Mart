@@ -23,7 +23,8 @@ public class User_DAO_Imp implements User_DAO{
 	public boolean saveUser(User user) {
 		boolean status=false;
 		try {
-			sessionFactory.getCurrentSession().save(user);
+			Session currentSession = sessionFactory.getCurrentSession();
+			currentSession.save(user);
 			status=true;
 		} catch (Exception e) {
 			e.printStackTrace();

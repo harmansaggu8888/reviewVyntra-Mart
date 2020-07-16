@@ -1,1 +1,38 @@
-<p>shop works!</p>
+<input #myInput class="au-input au-input-xl" 
+    type="text" name="search" 
+    placeholder="Search for clothes" 
+    />
+    <button  class="au-btn-submit" type="submit">
+        Search
+    </button>
+    <br>
+
+<!-- shop area start -->
+<div class="shop-area ptb-90">
+    <div class="container-fluid">       
+        <div class="shop-style-all">
+            <div class="row">
+                <div class="grid">
+                    <div class="col-md-3 col-sm-6 col-xs-12 grid-item cat2" *ngFor="let product of products">
+                        <div class="shop hover-style mb-30">
+                            <div class="shop-img">
+                                <a href="#">
+                                    <img src="data:image/png;base64,{{product.productimage}}"  height="150px" width="200px" alt="" />
+                                </a>
+                            </div>
+                            <div class="card-title">
+                                <h4><a href="#">{{product.productname}}</a></h4>
+                                <span>Rs. {{product.price}}</span>
+                            </div>
+                            <input type="hidden" value={{product.productid}} #prdid>
+                            <div class="product-cart">
+                                <button class="pe-7s-cart" (click)="addToCart(prdid)"></button>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>
+</div>          
+<!-- shop area end -->

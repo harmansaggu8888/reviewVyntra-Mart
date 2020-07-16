@@ -1,6 +1,5 @@
 
 <div class="waraper">
-            
             <header>
                 <div class="header-area">
                     <div class="container-fluid">
@@ -24,7 +23,7 @@
                                             <ul class="menu">
                                                 <li><a routerLink='Home' class="nav-link" >HOME</a></li>
                                                 <li><a routerLink='AboutUs' class="nav-link" >ABOUT US</a></li>
-                                                <li><a href=#>shop</a></li>
+                                                <li><a routerLink='shop' class="nav-link" >Shop</a></li>
                                                 <li><a routerLink='register_user' class="nav-link">Register User</a></li>
                                             </ul>
                                         </nav>
@@ -58,6 +57,46 @@
             <!-- header end -->
 
     <router-outlet></router-outlet>
+    
+    <!-- footer area start -->
+    <footer class="footer-area">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2 col-sm-5">
+                    <div class="footer-logo">
+                        <a href="#"><img src="assets/img/logo/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-md-7 col-sm-7">
+                    <div class="row">
+                        
+                        
+                        <div class="col-md-4 hidden-sm">
+                            <div class="footer-title res-mrg">
+                                <h3>Quick Links</h3>
+                                <div class="footer-menu">
+                                    <ul>
+                                        <li><a routerLink='AboutUs' class="nav-link" >About Us</a></li>
+                                        <li><a routerLink='shop' class="nav-link">Shop</a></li>
+                                        <li><a routerLink='register_user' class="nav-link">Register</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="footer-bottom text-center ptb-20">
+                <p>
+                    © 2020 Vyntras. All Rights Reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
 
     
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
